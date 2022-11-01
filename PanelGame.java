@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Vector;
+import java.util.concurrent.TimeUnit;
 
 public class PanelGame {
     SourcePanel sourcePanel = SourcePanel.getinstance();
@@ -50,6 +51,7 @@ public class PanelGame {
             public void actionPerformed(ActionEvent e) {
                 SourcePanel instannce = SourcePanel.getinstance();
                 instannce.setPanel(1);
+                refreshGamePanelBack();
                 //JPanel z=instannce.getPanelStart();
             }
         });
@@ -139,19 +141,21 @@ public class PanelGame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Vector<Integer> position = misc.checkGameWrd(cuv1);
+                int contor=0;
                 for(int i = 0; i< position.size(); i++){
                     if(position.get(i) < 0){
                         cuv1.get(-position.get(i) - 1).setBackground(Color.yellow);
                     }
                     else if(position.get(i)>0){
                         cuv1.get(position.get(i) - 1).setBackground(Color.green);
+                        contor++;
                     }
 
                 }
                     for(int j = 0; j <=5; j++){
                         cuv1.get(j).setEditable(false);
                     }
-
+                checkContor(contor);
             }
         });
 
@@ -159,56 +163,64 @@ public class PanelGame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Vector<Integer> position = misc.checkGameWrd(cuv2);
+                int contor=0;
                 for(int i = 0; i< position.size(); i++){
                     if(position.get(i) < 0){
                         cuv2.get(-position.get(i) - 1).setBackground(Color.yellow);
                     }
                     else if(position.get(i)>0){
                         cuv2.get(position.get(i) - 1).setBackground(Color.green);
+                        contor++;
                     }
                 }
                     for(int j = 0; j <= 5; j++) {
                         cuv2.get(j).setEditable(false);
                     }
+                checkContor(contor);
                 }
+
             });
 
         butonAdd[2].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Vector<Integer> position = misc.checkGameWrd(cuv3);
+                int contor=0;
                 for(int i = 0; i< position.size(); i++){
                     if(position.get(i) < 0){
                         cuv3.get(-position.get(i) - 1).setBackground(Color.yellow);
                     }
                     else if(position.get(i)>0){
                         cuv3.get(position.get(i) - 1).setBackground(Color.green);
+                        contor++;
                     }
                 }
                 for(int j = 0; j <= 5; j++) {
                     cuv3.get(j).setEditable(false);
                 }
-
+                checkContor(contor);
 
             }
-        });
+            });
 
         butonAdd[3].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Vector<Integer> position = misc.checkGameWrd(cuv4);
+                int contor=0;
                 for(int i = 0; i< position.size(); i++){
                     if(position.get(i) < 0){
                         cuv4.get(-position.get(i) - 1).setBackground(Color.yellow);
                     }
                     else if(position.get(i)>0){
                         cuv4.get(position.get(i) - 1).setBackground(Color.green);
+                        contor++;
                     }
                 }
                 for(int j = 0; j <= 5; j++) {
                     cuv4.get(j).setEditable(false);
                 }
-
+                checkContor(contor);
 
             }
         });
@@ -216,6 +228,7 @@ public class PanelGame {
         butonAdd[4].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                int contor=0;
                     Vector<Integer> position = misc.checkGameWrd(cuv5);
 
                 for(int i = 0; i< position.size(); i++){
@@ -224,12 +237,13 @@ public class PanelGame {
                     }
                     else if(position.get(i)>0){
                         cuv5.get(position.get(i) - 1).setBackground(Color.green);
+                        contor++;
                     }
                 }
                 for(int j = 0; j <= 5; j++) {
                     cuv5.get(j).setEditable(false);
                 }
-
+                checkContor(contor);
 
             }
         });
@@ -248,13 +262,19 @@ public class PanelGame {
                         cuv6.get(position.get(i) - 1).setBackground(Color.green);
                     }
                 }
-                if(contor==6){
+
+                for(int i=0;i<6;i++)
+                {
+                    cuv6.get(i).setEditable(false);
+                }
+                if(contor==6)
+                    checkContor(contor);
+                else {
+                    SourcePanel instance =SourcePanel.getinstance();
+                    instance.getPlayer().addGame();
                     setLabelWin();
                     refreshGamePanel();
                 }
-
-
-
             }
         });
 
@@ -262,13 +282,21 @@ public class PanelGame {
 
     }
 
+    private void checkContor(int i){
+        if(i==6){
+            SourcePanel instance =SourcePanel.getinstance();
+            instance.getPlayer().addGame();
+            instance.getPlayer().addWin();
+            setLabelWin();
+            refreshGamePanel();
+        }
+    }
+
     private void setLabelWin(){
         SourcePanel instance=SourcePanel.getinstance();
 
         raspuns.setText(instance.getWord());
         raspuns.setForeground(Color.white);
-
-
     }
     public JPanel getPanel(){
         return this.panel;
@@ -292,6 +320,12 @@ public class PanelGame {
     }
 
     public void refreshGamePanel(){
+        try{
+            TimeUnit.SECONDS.sleep(1);
+        }
+        catch(Exception e){
+            System.out.println("eroare");
+        }
         for(int i=0;i<6;i++)
         {
             cuv6.get(i).setText("");
@@ -326,12 +360,40 @@ public class PanelGame {
         catch (Exception e){
 
         }
-        try{
-            Thread.sleep(1500);
-        }
-        catch(Exception e){
+
+        //raspuns.setText("");
+    }
+
+    public void refreshGamePanelBack(){
+
+        for(int i=0;i<6;i++)
+        {
+            cuv6.get(i).setText("");
+            cuv6.get(i).setBackground(Color.white);
+            cuv6.get(i).setEditable(true);
+
+            cuv1.get(i).setText("");
+            cuv1.get(i).setBackground(Color.white);
+            cuv1.get(i).setEditable(true);
+
+            cuv2.get(i).setText("");
+            cuv2.get(i).setBackground(Color.white);
+            cuv2.get(i).setEditable(true);
+
+            cuv3.get(i).setText("");
+            cuv3.get(i).setBackground(Color.white);
+            cuv3.get(i).setEditable(true);
+
+            cuv4.get(i).setText("");
+            cuv4.get(i).setBackground(Color.white);
+            cuv4.get(i).setEditable(true);
+
+            cuv5.get(i).setText("");
+            cuv5.get(i).setBackground(Color.white);
+            cuv5.get(i).setEditable(true);
+
 
         }
-        raspuns.setText("");
+        //raspuns.setText("");
     }
 }

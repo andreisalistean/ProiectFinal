@@ -32,6 +32,7 @@ public class PanelStart {
                 SourcePanel instance = SourcePanel.getinstance();
                 instance.setPlayer(list.getSelectedValue());
                 instance.setPanel(4);
+
                 refresh();
             }
         });
