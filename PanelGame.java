@@ -161,6 +161,7 @@ public class PanelGame {
                         cuv1.get(j).setEditable(false);
                     }
                 checkContor(contor);
+                    sourcePanel.getPlayer().addGame();
             }
         });
 
@@ -273,7 +274,6 @@ public class PanelGame {
                     cuv6.get(i).setEditable(false);
                 }
                 checkContor(contor);
-                sourcePanel.getPlayer().addGame();
             }
         });
 
@@ -282,10 +282,12 @@ public class PanelGame {
     }
 
     private void checkContor(int i){
-        nextWord.setVisible(true);
+
         if(i==6){
+            nextWord.setVisible(true);
             SourcePanel instance =SourcePanel.getinstance();
             instance.getPlayer().addWin();
+
             setLabelWin();
         }
         nextWord.addActionListener(new ActionListener() {
