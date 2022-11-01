@@ -15,6 +15,7 @@ public class PanelGame {
     int i=0;
     private JPanel panel;
     private JButton[] butonAdd=new JButton[7];
+    private JButton nextWord;
     private JButton back;
     private JLabel raspuns;
     private ArrayList<JTextField> cuv1=new ArrayList<JTextField>();
@@ -46,6 +47,9 @@ public class PanelGame {
         }
         back = new JButton("Back");
         back.setBounds(10,330,70,30);
+        nextWord = new JButton("Next!");
+        nextWord.setBounds(150,330,100,30);
+        nextWord.setVisible(false);
         back.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -56,6 +60,7 @@ public class PanelGame {
             }
         });
         panel.add(back);
+        panel.add(nextWord);
         setText(cuv1,20);
         setText(cuv2,60);
         setText(cuv3,100);
@@ -267,14 +272,8 @@ public class PanelGame {
                 {
                     cuv6.get(i).setEditable(false);
                 }
-                if(contor==6)
-                    checkContor(contor);
-                else {
-                    SourcePanel instance =SourcePanel.getinstance();
-                    instance.getPlayer().addGame();
-                    setLabelWin();
-                    refreshGamePanel();
-                }
+                checkContor(contor);
+                sourcePanel.getPlayer().addGame();
             }
         });
 
@@ -283,13 +282,18 @@ public class PanelGame {
     }
 
     private void checkContor(int i){
+        nextWord.setVisible(true);
         if(i==6){
             SourcePanel instance =SourcePanel.getinstance();
-            instance.getPlayer().addGame();
             instance.getPlayer().addWin();
             setLabelWin();
-            refreshGamePanel();
         }
+        nextWord.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                refreshGamePanel();
+            }
+        });
     }
 
     private void setLabelWin(){
@@ -320,14 +324,10 @@ public class PanelGame {
     }
 
     public void refreshGamePanel(){
-        try{
-            TimeUnit.SECONDS.sleep(1);
-        }
-        catch(Exception e){
-            System.out.println("eroare");
-        }
+
         for(int i=0;i<6;i++)
         {
+            nextWord.setVisible(false);
             cuv6.get(i).setText("");
             cuv6.get(i).setBackground(Color.white);
             cuv6.get(i).setEditable(true);
