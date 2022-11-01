@@ -250,11 +250,9 @@ public class PanelGame {
                 }
                 if(contor==6){
                     setLabelWin();
-                    //refreshGamePanel();
+                    refreshGamePanel();
                 }
-                for(int j = 0; j <= 5; j++) {
-                    cuv6.get(j).setEditable(false);
-                }
+
 
 
             }
@@ -265,6 +263,11 @@ public class PanelGame {
     }
 
     private void setLabelWin(){
+        SourcePanel instance=SourcePanel.getinstance();
+
+        raspuns.setText(instance.getWord());
+        raspuns.setForeground(Color.white);
+
 
     }
     public JPanel getPanel(){
@@ -288,7 +291,47 @@ public class PanelGame {
         }
     }
 
-    public void refresh(){
+    public void refreshGamePanel(){
+        for(int i=0;i<6;i++)
+        {
+            cuv6.get(i).setText("");
+            cuv6.get(i).setBackground(Color.white);
+            cuv6.get(i).setEditable(true);
 
+            cuv1.get(i).setText("");
+            cuv1.get(i).setBackground(Color.white);
+            cuv1.get(i).setEditable(true);
+
+            cuv2.get(i).setText("");
+            cuv2.get(i).setBackground(Color.white);
+            cuv2.get(i).setEditable(true);
+
+            cuv3.get(i).setText("");
+            cuv3.get(i).setBackground(Color.white);
+            cuv3.get(i).setEditable(true);
+
+            cuv4.get(i).setText("");
+            cuv4.get(i).setBackground(Color.white);
+            cuv4.get(i).setEditable(true);
+
+            cuv5.get(i).setText("");
+            cuv5.get(i).setBackground(Color.white);
+            cuv5.get(i).setEditable(true);
+
+
+        }
+        try{
+            new Misc().getRandomWordFromFile();
+        }
+        catch (Exception e){
+
+        }
+        try{
+            Thread.sleep(1500);
+        }
+        catch(Exception e){
+
+        }
+        raspuns.setText("");
     }
 }
