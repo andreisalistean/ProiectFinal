@@ -53,15 +53,22 @@ public class PanelStart {
         butonStart.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //if(checkText(textUsername))
+                if(new Misc().checkUsername(textUsername))
+                {
 
-                model.addElement(new Player(textUsername.getText()));
-                SourcePanel instance =SourcePanel.getinstance();
+                    model.addElement(new Player(textUsername.getText()));
+                    SourcePanel instance =SourcePanel.getinstance();
 
-                instance.setPlayer(model.getElementAt(contor));
-                contor++;
-                refresh();
-                instance.setPanel(4);
+                    instance.setPlayer(model.getElementAt(contor));
+                    contor++;
+                    refresh();
+                    instance.setPanel(4);
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(null, "Introduceti un username ", "Eroare",
+                            JOptionPane.INFORMATION_MESSAGE);
+                }
             }
         });
         panel.add(butonStart);
@@ -77,6 +84,7 @@ public class PanelStart {
             public void actionPerformed(ActionEvent e) {
                 SourcePanel instance=SourcePanel.getinstance();
                 instance.setPanel(2);
+
             }
         });
         panel.add(butonSetWord);

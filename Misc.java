@@ -11,21 +11,23 @@ public class Misc implements Interface {
     SourcePanel panel = SourcePanel.getinstance();
     @Override
     public boolean checkUsername(JTextField text) {
-        if(text!=null)
-            return true;
-        return false;
+        String a="";
+        if(text.getText().equals(a))
+            return false;
+        return true;
     }
 
     @Override
     public boolean checkWord(JTextField text) {
         String aux = text.getText();
-        if(aux.length() != 5)
+        if(aux.length() != 6)
             return false;
-        return aux.equals(String.valueOf(text));
+        return true;
     }
 
     @Override
     public void addWord(String word) {
+        word=word.toUpperCase();
         File file = new File("Words.txt");
         FileWriter fr = null;
         BufferedWriter br = null;

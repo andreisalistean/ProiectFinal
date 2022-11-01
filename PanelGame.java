@@ -15,7 +15,7 @@ public class PanelGame {
     private JPanel panel;
     private JButton[] butonAdd=new JButton[7];
     private JButton back;
-    private JTextField text;
+    private JLabel raspuns;
     private ArrayList<JTextField> cuv1=new ArrayList<JTextField>();
     private ArrayList<JTextField> cuv2=new ArrayList<JTextField>();
     private ArrayList<JTextField> cuv3=new ArrayList<JTextField>();
@@ -33,6 +33,11 @@ public class PanelGame {
         panel=new JPanel() ;
         panel.setLayout(null);
         panel.setBackground(Color.DARK_GRAY);
+
+        raspuns=new JLabel("");
+        raspuns.setBounds(10,290,300,30);
+        panel.add(raspuns);
+
         for(int i=0; i < 6; i++) {
             butonAdd[i] = new JButton("Add");
             butonAdd[i].setBounds(330, i*40+20, 50, 30);
@@ -233,13 +238,19 @@ public class PanelGame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Vector<Integer> position = misc.checkGameWrd(cuv6);
+                int contor=0;
                 for(int i = 0; i< position.size(); i++){
                     if(position.get(i) < 0){
                         cuv6.get(-position.get(i) - 1).setBackground(Color.yellow);
                     }
                     else if(position.get(i)>0){
+                        contor++;
                         cuv6.get(position.get(i) - 1).setBackground(Color.green);
                     }
+                }
+                if(contor==6){
+                    setLabelWin();
+                    //refreshGamePanel();
                 }
                 for(int j = 0; j <= 5; j++) {
                     cuv6.get(j).setEditable(false);
@@ -253,9 +264,14 @@ public class PanelGame {
 
     }
 
+    private void setLabelWin(){
+
+    }
     public JPanel getPanel(){
         return this.panel;
     }
+
+
 
     private void setText(ArrayList<JTextField> text,int yHeight)
     {

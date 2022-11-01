@@ -20,6 +20,19 @@ public class PanelSetWord {
 
         addWord=new JButton("ADD");
         addWord.setBounds(165,80,70,30);
+        addWord.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Misc m=new Misc();
+                if(m.checkWord(text)){
+                    m.addWord(text.getText());
+                    refresh();
+                }
+                else
+                    JOptionPane.showMessageDialog(null, "Introduceti un cuvant valid", "Eroare",
+                            JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
         panel.add(addWord);
 
         back=new JButton("BACK");
@@ -28,6 +41,7 @@ public class PanelSetWord {
             @Override
             public void actionPerformed(ActionEvent e) {
                 SourcePanel instance =SourcePanel.getinstance();
+                refresh();
                 instance.setPanel(1);
             }
         });
@@ -40,6 +54,10 @@ public class PanelSetWord {
 
     public void refresh(){
         text.setText("");
+    }
+
+    public JTextField getText(){
+        return this.text;
     }
 
 }
